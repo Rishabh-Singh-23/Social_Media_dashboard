@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="social_media.css">
+  <title>Social Dashboard</title>
+ 
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Social Dashboard</h1>
+      <button id="loginButton">Login</button>
+    </div>
+    <ul id="feed" class="feed"></ul>
+  </div>
+
+  <script>
+    document.getElementById('loginButton').addEventListener('click', () => {
+      window.location.href = '/auth/example';
+    });
+
+    fetch('/api/feed')
+      .then(response => response.json())
+      .then(data => {
+        const feedElement = document.getElementById('feed');
+        data.forEach(item => {
+          const itemElement = document.createElement('li');
+          itemElement.className = 'feed-item';
+          itemElement.textContent = item.content;
+          feedElement.appendChild(itemElement);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching feed:', error);
+      });
+  </script>
+</body>
+</html>
